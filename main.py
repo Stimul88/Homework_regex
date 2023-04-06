@@ -39,35 +39,27 @@ def dict_add():
                 for p in range(len(j)):
                     if j[p] == '':
                         list3_.append(o[p])
-                        # dict3_[i] = j
                     else:
                         list3_.append(j[p])
-                        # dict3_[i] = o
                 dict3_[m] = list3_
     return dict3_
 
 
 def total_dict():
     dict4_ = {}
-    for m, o in dict_add().items():
-        # dict4_ = {}
-        for i, j in reg()[0].items():
-            if m != i:
-                dict4_[i] = j
-            else:
-                dict4_[m] = o
-    return dict4_
+    for key1, values1 in reg()[0].items():
+        dict4_[key1] = values1
+        dict4_.update(dict_add().items())
+    list5_ = []
+    for i in dict4_.keys():
+        m = (i + ',' + ','.join(dict4_.get(i))).split(',')
+        list5_.append(m)
 
-
-list5_ = []
-for i, j in total_dict().items():
-    m = (i + ',' + ','.join(j))
-    list5_.append(m.split(','))
+    return list5_
 
 
 if __name__ == '__main__':
+
     with open("phonebook.csv", "w") as f:
         datawriter = csv.writer(f, delimiter=",")
-        datawriter.writerows(list5_)
-
-        datawriter.writerows(list5_)
+        datawriter.writerows(total_dict())
